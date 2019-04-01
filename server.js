@@ -11,7 +11,7 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 //Require models
-var db = require("./models")
+// var db = require("./models")
 
 // Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
@@ -30,14 +30,10 @@ app.use(routes);
 //Connect to the Mongo DB
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-//mongoose.Promise = Promise
 mongoose.connect(MONGODB_URI)
 .catch(function(err){console.log(err);
 });
 
-//Routes
-// require("./routes/apiRoutes.js")(app);
-// require("./routes/htmlRoutes.js")(app)
 
 //Start the server
 app.listen(PORT, function() {

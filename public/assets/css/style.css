@@ -1,5 +1,8 @@
 body {
-  background-color: #f2f6d0;
+  background-color: #ffffff;
+}
+.nav-wrapper{
+  background-color: #2b2b2b;
 }
 #wrapper {
   width: 960px;
