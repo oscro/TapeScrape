@@ -19,6 +19,8 @@ router.get("/scrape", function(req, res) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
   
+      console.log($);
+      
       // Now, we grab every h2 within an article tag, and do the following:
       $("div h3").each(function(i, element) {
         // Save an empty result object
@@ -38,19 +40,26 @@ router.get("/scrape", function(req, res) {
         .next("p")
         .text();
   
-        // Create a new Article using the `result` object built from scraping
-        db.Article.create(result)
+        db.Article.findOne({title: result.title}).then(function(data){
+          if (data){
+            console.log("this entry already exists");
+            res.redirect("/");
+          };
+
+          db.Article.create(result)
           .then(function(dbArticle) {
             // View the added result in the console
             console.log(dbArticle);
-            if (result.length >= 10){
-              res.send("Scrape Complete");
-            };
           })
           .catch(function(err) {
             // If an error occurred, log it
             console.log(err);
           });
+
+        })
+        .catch(function(err){
+          console.log("This is the error" + err);
+        });
       });
   
       // Send a message to the client

@@ -20,6 +20,10 @@ var ArticleSchema = new Schema({
     type: String, 
     default: "No Summary"
   },
+  imgUrl: {
+    type: String,
+    default: "https://lorempixel.com/100/190/nature/6"
+  },
   // `note` is an object that stores a Note id
   // The ref property links the ObjectId to the Note model
   // This allows us to populate the Article with an associated Note

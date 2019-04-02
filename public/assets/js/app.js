@@ -1,15 +1,23 @@
 // Grab the articles as a json
 $.getJSON("/articles", function(data) {
+  
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br /><a href='https://yahoo.com/finance" + data[i].link + "'>Link to Article</a><br />" + data[i].summary + "</p>");
+    $("#articles").append(
+      '<div class="col s12 m7"><h2 class="header">' + data[i].title + 
+      '</h2><div class="card horizontal"><div class="card-image"><img src="' + data[i].imgUrl + '">' +
+      "</div><div class='card-stacked'><div class='card-content'><p data-id='" + data[i]._id + "'><br /><a href='https://yahoo.com/finance" + data[i].link + "'>Link to Article</a><br />" + data[i].summary + "</p>" +
+      "</div><div class='card-action'><a href='#' data-id='" + data[i]._id + "'"
+      + "id='writeComment'>Write a comment!</a></div></div></div></div>"
+    // "<p class='flow-text' data-id='" + data[i]._id + "'>" + data[i].title + "<br /><a href='https://yahoo.com/finance" + data[i].link + "'>Link to Article</a><br />" + data[i].summary + "</p>"
+    );
   }
 });
 
 
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+$(document).on("click", "#writeComment", function() {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
@@ -26,9 +34,9 @@ $(document).on("click", "p", function() {
       // The title of the article
       $("#notes").append("<h6>" + data.title + "</h6>");
       // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title' >");
+      $("#notes").append("<input id='titleinput' name='title' placeholder='Title'>");
       // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+      $("#notes").append("<textarea class='materialize-textarea' id='bodyinput' name='body' placeholder='Type in your comment about the article here!'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
       $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Comment</button>");
 
